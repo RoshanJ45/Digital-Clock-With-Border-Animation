@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <style>
+    
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 500px;
+  height: 200px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@property --i {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.box {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 15px;
+ 
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: repeating-conic-gradient(
+    from var(--i),
+    #00dbde 0%,
+    #00dbde 5%,
+    transparent 5%,
+    transparent 40%,
+    #00dbde 50%
+  );
+  animation: anim 4s linear infinite;
+}
+
+.box .num {
+  font-size: 45px;
+  font-weight: 800;
+  line-height: 60px;
+  z-index: 1;
+}
+
+.box .txt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  z-index: 1;
+}
+
+.box::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(
+    from var(--i),
+    #fc00ff 0%,
+    #fc00ff 5%,
+    transparent 5%,
+    transparent 40%,
+    #fc00ff 50%
+  );
+  border-radius: 10px;
+  animation: anim 4s linear infinite;
+  animation-delay: -1s;
+}
+
+@keyframes anim {
+  0% {
+    --i: 0deg;
+  }
+  100% {
+    --i: 360deg;
+  }
+}
+
+.box::after {
+  position: absolute;
+  content: "";
+  inset: 3px;
+  background: #000;
+  border: 3px solid #1b1b1b;
+  border-radius: 10px;
+}
+      </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Clock - JavaScript</title>
+
+    
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="box">
+        <span class="num hour">12</span>
+        <span class="txt">Hours</span>
+      </div>
+      <div class="box">
+        <span class="num min">34</span>
+        <span class="txt">Minutes</span>
+      </div>
+      <div class="box">
+        <span class="num sec">00</span>
+        <span class="txt">Seconds</span>
+      </div>
+      <div class="box">
+        <span class="num ampm">PM</span>
+      </div>
+    </div>
+    <script src="app.js">
+        let hourTxt = document.querySelector(".hour");
+let minTxt = document.querySelector(".min");
+let secTxt = document.querySelector(".sec");
+let ampmTxt = document.querySelector(".ampm");
+
+setInterval(() => {
+  let date = new Date();
+
+  let hour = date.getHours();
+  let mins = date.getMinutes();
+  let sec = date.getSeconds();
+
+  let label;
+  label = hour < 12 ? "AM" : "PM";
+
+  hour = hour > 12 ? hour - 12 : hour;
+  hour = hour == 0 ? 12 : hour;
+  hour = hour < 10 ? "0" + hour : hour;
+
+  mins = mins < 10 ? "0" + mins : mins;
+  sec = sec < 10 ? "0" + sec : sec;
+
+  hourTxt.innerText = hour;
+  minTxt.innerText = mins;
+  secTxt.innerText = sec;
+
+  ampmTxt.innerText = label;
+}, 1000);
+    </script>
+  </body>
+</html>
